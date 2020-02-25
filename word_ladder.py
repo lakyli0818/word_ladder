@@ -48,15 +48,14 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     while len(q) > 0:                                       #if the there still are stack on the queue
         topstack = q.pop()                                  #take the right stack as topstack
 
-        for word in dictionary:                             #for each word in the dictionary
+        newdic=deepcopy(dictionary)
+
+        for word in newdic:                             #for each word in the dictionary
             if _adjacent(word,topstack[-1]) is True:       #if it is the adjacent word with the first term from the right side of the stak
                 copystack = deepcopy(topstack)              #make a copy of the stack
                 copystack.append(word)                      #add that word to the copied stack
 
                 if word == end_word:                        #if this word is the end_word
-                    for i in range(1,len(copystack)-2):     #from the second word to the second to the last word
-                        if _adjacent(copystack[i-1],copystack[i+1]):        #if one word's left side and right side are adjacent
-                            copystack.pop(i)                #delete the word in the middle
                     return copystack                        #return the rest of the stack
 
                 q.appendleft(copystack)                     #add this stack to the left of the queue
